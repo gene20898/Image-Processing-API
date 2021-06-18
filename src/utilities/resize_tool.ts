@@ -1,17 +1,24 @@
 import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
 
-const resize_img = async (fileName: string, width: number, height: number) => {
+const resize_img = async (
+  fileName: string,
+  width: number,
+  height: number
+): Promise<string> => {
   const inputPath = `assets/full/${fileName}.jpg`;
-  const outputPath = `assets/thumb/${fileName}-resized-${width}x${height}.jpg`;
+  const outputPath = path.join(
+    __dirname,
+    '../../',
+    `assets/thumb/${fileName}-resized-${width}x${height}.jpg`
+  );
 
-  try {
-    const result = await sharp(inputPath)
-      .resize(width, height)
-      .jpeg()
-      .toFile(outputPath);
-    return result;
-  } catch (err) {
-    throw err;
+  if (fs.existsSync(outputPath)) {
+    return outputPath;
+  } else {
+    await sharp(inputPath).resize(width, height).jpeg().toFile(outputPath);
+    return outputPath;
   }
 };
 

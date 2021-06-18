@@ -1,18 +1,9 @@
-import jasmine from 'jasmine';
-import { stringify } from 'querystring';
 import resize_img from '../../src/utilities/resize_tool';
 
 describe('Test for image resizing function', () => {
-  it('should return output img info', async () => {
+  it('should return output img path', async () => {
     const result = await resize_img('fjord', 200, 200);
-    expect(result).toEqual({
-      format: 'jpeg',
-      width: 200,
-      height: 200,
-      channels: 3,
-      premultiplied: false,
-      size: 6977,
-    });
+    expect(result).toEqual('assets/thumb/fjord-resized-200x200.jpg');
   });
 
   it('should return error message', async () => {
