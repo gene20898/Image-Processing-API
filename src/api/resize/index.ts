@@ -1,5 +1,7 @@
 import express from 'express';
 import resize_img from '../../utilities/resize_tool';
+import path from 'path'
+
 const resize = express.Router();
 
 resize.get('/', async (req, res) => {
@@ -8,7 +10,8 @@ resize.get('/', async (req, res) => {
   const height = Number(req.query.height);
   try {
     const result = await resize_img(fileName, width, height);
-    res.sendFile(result);
+    const outputPath = path.join(__dirname,"../../../",result)
+    res.sendFile(outputPath);
   } catch (err) {
     res.send(err.message);
   }

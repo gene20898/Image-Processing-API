@@ -1,10 +1,10 @@
-import resize_img from '../../src/utilities/resize_tool';
+import resize_img from '../../utilities/resize_tool';
 
 describe('Test for image resizing function', () => {
   it('should return output img path', async () => {
-    const result = await resize_img('fjord', 200, 200);
-    expect(result).toEqual(
-      'C:\\Users\\gene_\\Desktop\\img_API\\assets\\thumb\\fjord-resized-200x200.jpg'
+    const result = await resize_img('fjord',400, 400);
+    expect(result).toBe(
+      'assets/thumb/fjord-resized-400x400.jpg'
     );
   });
 

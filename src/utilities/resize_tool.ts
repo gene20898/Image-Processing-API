@@ -8,16 +8,18 @@ const resize_img = async (
   height: number
 ): Promise<string> => {
   const inputPath = `assets/full/${fileName}.jpg`;
-  const outputPath = path.join(
-    __dirname,
-    '../../../',
-    `assets/thumb/${fileName}-resized-${width}x${height}.jpg`
-  );
-  if (fs.existsSync(outputPath)) {
+  const outputPath = `assets/thumb/${fileName}-resized-${width}x${height}.jpg`;
+
+  if (fs.existsSync(path.resolve(__dirname,outputPath))) {
+    console.log("cache img");
     return outputPath;
   } else {
-    await sharp(inputPath).resize(width, height).jpeg().toFile(outputPath);
-    return outputPath;
+    try{
+      await sharp(inputPath).resize(width, height).jpeg().toFile(outputPath);
+      return outputPath;
+    }catch(err){
+      throw err;
+    }
   }
 };
 
