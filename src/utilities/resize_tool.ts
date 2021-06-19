@@ -10,16 +10,13 @@ const resize_img = async (
   const inputPath = `assets/full/${fileName}.jpg`;
   const outputPath = `assets/thumb/${fileName}-resized-${width}x${height}.jpg`;
 
-  if (fs.existsSync(path.resolve(__dirname,outputPath))) {
-    console.log("cache img");
+  if (fs.existsSync(path.join(__dirname, '../../', outputPath))) {
+    console.log('retrieved from cached image');
     return outputPath;
   } else {
-    try{
-      await sharp(inputPath).resize(width, height).jpeg().toFile(outputPath);
-      return outputPath;
-    }catch(err){
-      throw err;
-    }
+    await sharp(inputPath).resize(width, height).jpeg().toFile(outputPath);
+    console.log('generated new image');
+    return outputPath;
   }
 };
 
